@@ -1,6 +1,10 @@
 package com.spdb.club.utils;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
 /**
  * @ClassName PageUtils 类
  * @Description 分页工具类
@@ -8,14 +12,19 @@ package com.spdb.club.utils;
  * @Date 2021/3/20 21:23
  * @Version 1.0
  */
+@ApiModel(value = "分页实体类")
 public class PageUtils {
     //总记录数
+    @ApiModelProperty(name = "totalRecord",value = "总记录条数",dataType = "int")
     private int totalRecord=0;
     //总页数(默认1，通过计算获得)
+    @ApiModelProperty(name="totalPage",value = "总页数",notes = "总页数(默认1，通过计算获得)",dataType = "int")
     private int totalPage=1;
     //每页记录条数(默认10，可通过传参数修改)
+    @ApiModelProperty(name = "pageSize",value = "每页记录条数",notes = "每页记录条数(默认10，可通过传参数修改)",dataType = "int")
     private int pageSize=10;
-    //当前页
+    //当前页序号(默认首页)
+    @ApiModelProperty(name = "pageNo",value = "当前页序号",notes = "当前页序号(默认首页)",dataType = "int")
     private int pageNo=1;
 
     public void randPage(int pageNo){
