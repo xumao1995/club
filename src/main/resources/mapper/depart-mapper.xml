@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spdb.club.dao.DepartDao">
+    <sql id="allColumns" >
+        id, name, description
+    </sql>
+    <select id="selectOne" resultType="Depart">
+        select  <include refid="allColumns"></include>from tb_depart where id = #{id} limit 1
+    </select>
+<!--    查询全部部门信息-->
+    <select id="selectAll" resultType="Depart" >
+        SELECT <include refid="allColumns"></include> FROM tb_depart
+    </select>
+<!--分页查询部门信息-->
+    <select id="selectByPage" parameterType="com.spdb.club.utils.PageUtils" resultType="Depart">
+--         MySQL limit分页不支持表达式计算
+        <bind name="offset" value="(pageNo-1)*pageSize"/>
+        SELECT <include refid="allColumns"></include> FROM tb_depart LIMIT #{offset},#{pageSize}
+    </select>
+<!--    搜索查询部门信息-->
+    <select id="selectBySearch" parameterType="com.spdb.club.utils.PageUtils" resultType="Depart">
+        <bind name="offset" value="(pageUtils.pageNo-1)*pageUtils.pageSize"/>
+        SELECT <include refid="allColumns"></include> FROM tb_depart WHERE name LIKE CONCAT('%',#{name},'%') LIMIT #{offset},#{pageUtils.pageSize}
+    </select>
+<!--插入部门信息-->
+    <insert id="insert" parameterType="Depart">
+        INSERT INTO tb_depart(name,description)VALUES(#{name},#{description})
+    </insert>
+<!--修改部门信息-->
+    <update id="update" parameterType="Depart">
+        UPDATE tb_depart SET name = #{name}, description = #{description} WHERE id = #{id}
+    </update>
+
+
+</mapper>
